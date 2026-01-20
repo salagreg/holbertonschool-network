@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Affiche les ports d'écoutes TCP et UDP avec les programmes associés
+sudo netstat -tulnp
