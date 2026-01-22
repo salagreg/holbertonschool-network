@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Configurer hostsfile et ajouter Facebook
+# Configure hosts file - Idempotent version
+
+# 1. Remplacer 127.0.0.1 par 127.0.0.2 (uniquement si 127.0.0.1 est présent)
+# On utilise cp + sed + cat pour contourner les blocages Docker sur sed -i
 if grep -q "127.0.0.1" /etc/hosts; then
     cp /etc/hosts /tmp/hosts.tmp
     sed 's/127.0.0.1/127.0.0.2/g' /tmp/hosts.tmp > /tmp/hosts.new
     cat /tmp/hosts.new > /etc/hosts
 fi
 
+# 2. Ajouter facebook (uniquement si la ligne n'existe pas déjà)
 if ! grep -q "8.8.8.8 facebook.com" /etc/hosts; then
     echo "8.8.8.8 facebook.com" >> /etc/hosts
 fi
